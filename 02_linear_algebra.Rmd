@@ -1,0 +1,5 @@
+# Linear algebra {#linear}
+ 
+
+
+Linear algebra is an important component for modern data analysis and understanding it is vital for analytics.

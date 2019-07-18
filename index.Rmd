@@ -1,0 +1,68 @@
+--- 
+#title: "Course outline: STAT805"
+author: "Robin Hankin"
+date: "`r Sys.Date()`"
+site: bookdown::bookdown_site
+output: bookdown::gitbook
+documentclass: book
+biblio-style: apalike
+link-citations: yes
+github-repo: RobinHankin/STAT805
+description: "This is the supplementary course manual for STAT805 (mathematics)"
+---
+
+
+
+ \newpage
+ \pagenumbering{arabic}
+
+# Overview {-}
+
+This is the handbook for STAT805 (mathematics).  Details of the course structure,
+including assessment and timetables, may be found on AUTonline.  The
+whole course is based around R and RStudio which may be downloaded
+from
+
+```https://cran.r-project.org/```
+
+and
+
+```https://www.rstudio.com/```
+
+respectively.
+
+This course lectures have been recorded and the entire playlist is
+available on YouTube at:
+
+```{block2, type='youtube'}
+<https://www.youtube.com/playlist?list=PL018X5Hlr4RkgE65Pg93TFY-32KCVpW84>
+```
+
+which you may view at your leisure.  The URL should be clickable in
+this and similar boxes throughought the manual.  Note that the course
+as delivered will vary slightly from the YouTube videos and in
+particular the material might be presented in a different order; but
+each class is a reasonably self-contained unit, split into three or
+four parts.  The videos are also available in a slightly different
+format on Mediasite.  To view, log in to AUTonline and then
+
+```content system -> institution -> learn -> maths```
+
+takes you to a number of mathematical resources, including the videos
+which are at ```STAT601``` or ```STAT805```.
+
+This manual is distributed under the GNU GPL and is available at
+
+```https://github.com/RobinHankin/stat805```
+
+Please feel free to send corrections, bug reports, fanmail, etc to the
+issues page
+
+```https://github.com/RobinHankin/stat805/issues```
+
+
+\newpage
+\includegraphics{ornamental20}
+
+```https://github.com/RobinHankin/knotR```
+

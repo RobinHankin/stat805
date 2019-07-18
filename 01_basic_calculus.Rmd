@@ -1,0 +1,29 @@
+---
+output:
+  pdf_document: default
+  html_document: default
+---
+# Introduction to calculus {#calculus}
+
+\newcommand{\prob}[1]{\operatorname{\mathrm{Prob}}\left({#1}\right)}
+\newcommand{\like}[1]{\operatorname{\mathcal{L}}\left(#1\right)}
+\newcommand{\supp}[1]{\operatorname{\mathcal{S}}\left(#1\right)}
+
+
+\newcommand{\likeval}{\mathcal{L}}
+\newcommand{\suppval}{\mathcal{S}}
+
+
+## Calculus
+
+
+(This short manual gives an introduction to the basics of calculus.  It
+is informal, non-rigorous and focusses on practical applications.  If
+you want a rigorous introduction to calculus, see either of the two
+books by Spivak in the references).
+
+You will recall the basics of univariate calculus from the figure:
+
+\includegraphics{calculus1}
+
+
