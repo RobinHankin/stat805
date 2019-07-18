@@ -17,13 +17,100 @@ output:
 ## Calculus
 
 
-(This short manual gives an introduction to the basics of calculus.  It
-is informal, non-rigorous and focusses on practical applications.  If
-you want a rigorous introduction to calculus, see either of the two
-books by Spivak in the references).
+(There are many many online resources for calculs at every level of
+sophistication, ranging from secondary school material to exterior
+calculus on manifolds.  This short manual gives an introduction to the
+basics of calculus.  It is informal, non-rigorous and focusses on
+practical applications.  If you want a rigorous introduction to
+calculus, see either of the two books by Spivak in the references).
 
 You will recall the basics of univariate calculus from the figure:
 
 \includegraphics{calculus1}
 
+The idea is to give the *slope* of the curve as $\frac{dy}{dx}$, or
+sometimes written $f'(x)$.  We usually write
 
+\[
+\delta y=f'(x)\delta x\]
+
+so we have
+
+\[
+f(x+\delta x) = f(x) + \delta x\times f(x)\qquad\mbox{to first order}
+\]
+
+You will recall that differentiation is an
+algebraic process and some examples follow:
+
+
+* $f(x)=x^3\longrightarrow f'(x)=3x^2$
+* $f(x)=x^7\longrightarrow f'(x)=7x^6$
+* $f(x)=x^n\longrightarrow f'(x)=nx^{n-1}$
+* $f(x)=\sin(x)\longrightarrow f'(x)=\cos(x)$
+* $f(x)=\exp(x)\longrightarrow f'(x)=\exp(x)$
+
+Differentiation is linear which means that we can say things like
+
+* $f(x)=3x^7\longrightarrow f'(x)=21x^6$
+* $f(x)=x^3+x^6\longrightarrow f'(x)=3x^2+6x^5$
+* $f(x)=x^3+\sin(x)\longrightarrow f'(x)=3x^2+\cos(x)$
+
+
+## Stop: verification.
+
+We will now verify that one of these formulae is correct using R.
+Consider $f(x)=x^3+x^6$.  Taking $x=1.2$ as an example, we have
+
+```{r}
+f <- function(x){x^3 + x^6}
+f(1.2)
+1.2^3 + 1.2^6
+```
+
+So the two methods agree.  Now algebra shows us that $f'(x)=3x^2+6x^5$
+and we can verify this using $\delta x=0.01$:
+
+```{r}
+fdash <- function(x){3*x^2 + 6*x^5}
+x <- 1.2        # define numerical value of x
+dx <- 0.01       # notional small value
+f(x)              # remind ourselves what f(x) is
+f(x+dx)             # move a little distance along the x axis
+f(x) + dx*fdash(x)  # close agreement
+```
+
+Which provides numerical evidence that we have the correct formula for
+$f'(x)$.  We will try something a little more complicated now:
+
+
+```{r}
+f <- function(x){sin(x+x^2/3) + x^2/10}  # a  more complicated function
+x <- seq(from=-3,to=3,len=100)    # define a sequence of x-values for plotting
+plot(x,f(x))                     # plot the function
+abline(0,0)                     # mark y=0 for reference
+```
+
+This is quite a complicated function and although we could
+differentiate it by algebra, we will use R to define a derivative
+numerically:
+
+```{r}
+dx <- 1e-6   # notional small value
+fdash <- function(x){(f(x+dx)-f(x))/dx}  # direct implementation of f'
+plot(x,fdash(x))                     # plot the derivative
+abline(0,0)                     # mark y=0 for reference
+```
+
+Actually it might be  better to plot both $f$ and $f'$ on the same axes:
+
+
+```{r}
+plot(x,f(x),type='l')
+points(x,fdash(x),type='l',col='red')
+legend("topleft",lty=1,col=c("black","red"),legend=c("f(x)","f'(x)"))
+abline(0,0)
+```
+
+Spend some time checking that your understanding of function and
+derivative is correct using the above figure.
