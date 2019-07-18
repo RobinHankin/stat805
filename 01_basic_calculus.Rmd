@@ -92,7 +92,7 @@ $f'(x)$.  We will try something a little more complicated now:
 
 
 ```{r}
-f <- function(x){sin(x+x^2/3)+x^2/10}  # a  more complicated function
+f <- function(x){sin(x+x^2/3)+x^2/10}  # overwrite f()
 x <- seq(from=-3,to=3,len=100)       # define a sequence of x-values 
 plot(x,f(x))                       # plot the function
 abline(0,0)                      # mark y=0 for reference
@@ -158,6 +158,23 @@ a root, which we discovered algebraically above:
 uniroot(f,interval=c(-0.1,0.1))
 ```
 
+### verification
+
+Always always always verify your findings.  We will take the values
+found by ```uniroot()``` and mark them on a plot, just to check that
+they do in fact correspond to roots:
+
+```{r}
+plot(x,f(x),axes=FALSE,type='l')  # basic plot, no axes
+axis(1,pos=0) # x-axis, at (vertical) position 0
+axis(2,pos=0) # y-axis, at (vertical) position 0
+points(c(-2.28051,0,2.114632),c(0,0,0),pch=4,cex=3,col='red')
+```
+
+In the diagram above, the red crosses are plotted at the positions
+given by ```uniroot()``` and we can see that these lie at the points
+where the curve crosses the x-axis, that is, at the roots of function
+```f()```.
 
 ## Optimization
 
@@ -194,4 +211,26 @@ To find a _maximum_ we simply minimize the negative of ```f()```:
 g <- function(x){-f(x)} # g(x) = -f(x)
 optimize(g,c(-1,2))     # take care with signs
 ```
+
+
+### Verification
+
+Always always always verify your findings.  We will take the values
+found by ```optim()``` and mark them on a plot, just to check that
+they do in fact correspond to (local) maxima:
+
+```{r}
+plot(x,f(x),axes=FALSE)  # basic plot, no axes
+axis(1,pos=0) # x-axis, at (vertical) position 0
+axis(2,pos=0) # y-axis, at (vertical) position 0
+points(
+    c(-1.079,2.477,1.214),   # x-coordinates of extrema
+    c(-0.521,-0.368,+1.139), # y-coordinates of extrema
+    pch=4,col="red",cex=4)   # control the appearance
+```
+
+In the diagram above, the red crosses are plotted at the positions
+given by ```optim()``` and we can see that these lie at the points
+where the curve has a (local) maximum or minimum, that is, at extrema
+of ```f()```.
 
