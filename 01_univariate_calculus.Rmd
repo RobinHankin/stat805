@@ -3,7 +3,7 @@ output:
   pdf_document: default
   html_document: default
 ---
-# Introduction to calculus {#calculus}
+# Introduction to calculus, univariate {#calculus}
 
 \newcommand{\prob}[1]{\operatorname{\mathrm{Prob}}\left({#1}\right)}
 \newcommand{\like}[1]{\operatorname{\mathcal{L}}\left(#1\right)}
@@ -14,10 +14,10 @@ output:
 \newcommand{\suppval}{\mathcal{S}}
 
 
-## Calculus
+## Univariate calculus
 
 
-(There are many many online resources for calculs at every level of
+(There are many many online resources for calculus at every level of
 sophistication, ranging from secondary school material to exterior
 calculus on manifolds.  This short manual gives an introduction to the
 basics of calculus.  It is informal, non-rigorous and focusses on
@@ -63,6 +63,8 @@ There are also rules for iterated functions and products:
 * $f(x) = \sin(x^2)\longrightarrow f'(x)=2x\cos(x^2)$.
 
 See any calculus textbook for reminders.
+
+
 
 ## Stop: verification.
 
@@ -122,7 +124,10 @@ abline(0,0)
 Spend some time checking that your understanding of function and
 derivative is correct using the above figure.
 
-
+Note that both maxima and minima have $f'=0$ and to distinguish these
+we can calculate the sign of the second derivative.  If $f'(x)=0,
+f''(x)>0$ we have a minimum and if $f'(x)=0,f''(x)<0$ we have a
+maximum.
 
 ## Root finding
 
@@ -221,8 +226,8 @@ they do in fact correspond to (local) maxima:
 
 ```{r}
 plot(x,f(x),axes=FALSE)  # basic plot, no axes
-axis(1,pos=0) # x-axis, at (vertical) position 0
-axis(2,pos=0) # y-axis, at (vertical) position 0
+axis(1,pos=0)           # x-axis, at  position 0
+axis(2,pos=0)          # y-axis, at position 0
 points(
     c(-1.079,2.477,1.214),   # x-coordinates of extrema
     c(-0.521,-0.368,+1.139), # y-coordinates of extrema
@@ -233,4 +238,38 @@ In the diagram above, the red crosses are plotted at the positions
 given by ```optim()``` and we can see that these lie at the points
 where the curve has a (local) maximum or minimum, that is, at extrema
 of ```f()```.
+
+
+## Worked example: algebraic maximization.
+
+We will maximize $1/x^2 - 1/x^3$, a function that occurs in
+relativistic dynamics.  We first write $f(x)=x^{-2} - x^{-3}$ and
+differentiate to obtain $f'(x) = -2x^{-3} + 3x^{-4}$.  Then we need to
+solve $f'(x)=0$ for $x$ which amounts finding $x$ with $-2x^{-3} +
+3x^{-4}=0$.  Algebra shows us that $x=3/2$ is the solution.
+
+However, this point might be a maximum or a minimum (or indeed a point
+of inflection) so we need to check that the *second* derivative is
+negative at $x=3/2$.  We can say $f''(x) = 6x^{-4}-12x^{-5}$ and so
+$f''(3/2) =
+6\left(\frac{3}{2}\right)^{-4}-12\left(\frac{3}{2}\right)^{-5}\simeq
+-0.395<0$ as required.
+
+Always always always always always always always always always verify
+your work numerically:
+
+
+```{r}
+x <- seq(from=0.78,to=6,len=100)
+plot(x,1/x^2-1/x^3,type='b')
+abline(h=0)
+points(3/2,(2/3)^2-(2/3)^3,pch=16,cex=3,col='red')
+```
+
+In the above, the red dot correctly shows the position of the maximum.
+Note that, when preparing this resource, I got the position wrong a
+total of seven times before finding and correcting my errors
+(including several R errors, several algebraic errors, and one
+conceptual error) to give you the version you see here.  Checking is
+difficult!
 
