@@ -57,6 +57,13 @@ Differentiation is linear which means that we can say things like
 * $f(x)=x^3+\sin(x)\longrightarrow f'(x)=3x^2+\cos(x)$
 
 
+There are also rules for iterated functions and products:
+
+* $f(x) = x^2\sin(x)\longrightarrow f'(x)=x^2\cos(x) + 2x\sin(x)$
+* $f(x) = \sin(x^2)\longrightarrow f'(x)=2x\cos(x^2)$.
+
+See any calculus textbook for reminders.
+
 ## Stop: verification.
 
 We will now verify that one of these formulae is correct using R.
@@ -76,8 +83,8 @@ fdash <- function(x){3*x^2 + 6*x^5}
 x <- 1.2        # define numerical value of x
 dx <- 0.01       # notional small value
 f(x)              # remind ourselves what f(x) is
-f(x+dx)             # move a little distance along the x axis
-f(x) + dx*fdash(x)  # close agreement
+f(x+dx)             # move a small distance along the x axis
+f(x) + dx*fdash(x)   # close agreement!
 ```
 
 Which provides numerical evidence that we have the correct formula for
@@ -85,10 +92,10 @@ $f'(x)$.  We will try something a little more complicated now:
 
 
 ```{r}
-f <- function(x){sin(x+x^2/3) + x^2/10}  # a  more complicated function
-x <- seq(from=-3,to=3,len=100)    # define a sequence of x-values for plotting
-plot(x,f(x))                     # plot the function
-abline(0,0)                     # mark y=0 for reference
+f <- function(x){sin(x+x^2/3)+x^2/10}  # a  more complicated function
+x <- seq(from=-3,to=3,len=100)       # define a sequence of x-values 
+plot(x,f(x))                       # plot the function
+abline(0,0)                      # mark y=0 for reference
 ```
 
 This is quite a complicated function and although we could
@@ -98,19 +105,93 @@ numerically:
 ```{r}
 dx <- 1e-6   # notional small value
 fdash <- function(x){(f(x+dx)-f(x))/dx}  # direct implementation of f'
-plot(x,fdash(x))                     # plot the derivative
-abline(0,0)                     # mark y=0 for reference
+plot(x,fdash(x),main="f'(x)")           # plot the derivative
+abline(0,0)                            # mark y=0 for reference
 ```
 
 Actually it might be  better to plot both $f$ and $f'$ on the same axes:
 
 
 ```{r}
-plot(x,f(x),type='l')
+plot(x,f(x),type='l',main="f and fdash")
 points(x,fdash(x),type='l',col='red')
-legend("topleft",lty=1,col=c("black","red"),legend=c("f(x)","f'(x)"))
+legend("topleft",lty=1,col=c("black","red"),legend=c("f(x)","fdash(x)"))
 abline(0,0)
 ```
 
 Spend some time checking that your understanding of function and
 derivative is correct using the above figure.
+
+
+
+## Root finding
+
+It is a very frequent occurence that we wish to identify *roots*, that
+is, places where the function crosses the $x$-axis; symbolically we
+would write $x\colon f(x)=0$.  Looking at the function we can see a
+root at about -2.5, one at about 0, and one at about 2.1.  We will
+find the exact positions of these using R.  But before we start using
+R, we can say that $x=0$ is an _exact_ root of $f(x)=0$.  Can you see
+why?
+
+To find a root of a function ```f```, we use the ```uniroot()```
+function; remember to type ```?uniroot``` at the R prompt to get help
+on this functionality.
+
+```{r}
+uniroot(f,interval=c(-3,-1))
+```
+
+We can see from the different lines of output from ```uniroot()```
+that the root is at ```-2.28051``` at which point the function has a
+value of ```1.057589e-6```, which is very small.  To find the other
+root we use a different starting interval:
+
+```{r}
+uniroot(f,interval=c(2,2.5))
+```
+
+As one further piece of verification we will check that zero is indeed
+a root, which we discovered algebraically above:
+
+```{r}
+uniroot(f,interval=c(-0.1,0.1))
+```
+
+
+## Optimization
+
+Quite often we wish to minimize a function (typically the function
+represents a cost of some sort, and we wish to minimize this).  In
+calculus we observe that at a minimum, $f'(x)=0$ but this turns out to
+be difficult to use in practice.  The R function we will use is called
+```optimize()``` and this again takes a function and an interval.
+Looking again at the graph of the function we see that there is one
+minimum at about $x=-1.1$ and one at about $x=2.5$.
+
+
+```{r}
+optimize(f,c(-2,0))
+```
+
+So we see that there is a minimum at $x=-1.079651$.  Just to check, we
+can evaluate our (numerical) derivative at this point:
+
+```{r}
+fdash(-1.079651)
+```
+
+showing that the slope of the line is indeed quite small at this
+point.  We can find the other (local!) minimum:
+
+```{r}
+optimize(f,c(2,3))
+```
+
+To find a _maximum_ we simply minimize the negative of ```f()```:
+
+```{r}
+g <- function(x){-f(x)} # g(x) = -f(x)
+optimize(g,c(-1,2))     # take care with signs
+```
+
