@@ -122,16 +122,83 @@ methods.
 
 We will consider $f(x,y) = x+\sin(x)-xy^2$, a more complicated
 function; finding roots of this equation algebraically is more or less
-impossible.  So we need visual help.
+impossible.  So we need visual help.  There are a number of ways of
+representing this function, but the first step is to define an array
+of values of x and y:
 
+```{r}
+xvals <- seq(from = -4, to = +4, len=100)
+yvals <- seq(from = -4, to = +4, len=100)
+jj <- expand.grid(xvals,yvals)
+head(jj)
+```
 
+Thus each row of variable ```jj``` is a pair of x,y values.  To
+evaluate our function $f(x,y) = x^2+y^2 + x + 4y + \sin(xy)$
+we need idiom like this:
 
+```{r}
+f <- function(v){
+  x <- v[1]
+  y <- v[2]
+  return(x^2+y^2 + x + 4*y + sin(x*y))
+}
+```
+
+and to evaluate it we need to use the ```apply()``` construction:
+
+```{r}
+M <- apply(jj,1,f)     # apply the function f() to jj
+M <- matrix(M,100,100) # wrap M up into a matrix 
+str(M)                 # str() summarises R objects
+```
+
+We can view M using ```persp()```:
+
+```{r}
+contour(xvals,yvals,M,nlevels=30,xlim=c(-5,5),ylim=c(-5,5),asp=1,axes=FALSE)
+axis(1,pos=-5,at=c(-4,-2,0,2,4))
+axis(2,pos=-5)
+```
+
+In the diagram above we see some contour lines of the function, one of
+which is marked '0'.  This is clearer using the following idiom:
+
+```{r}
+filled.contour(xvals,yvals,M>0,asp=1)
+```
+
+In the graph above, we see the positive region in one colour and the
+negative region in another; where these meet is the solution to
+$f(x,y)=0$.
+    
 ## multivariate optimization
 
+To minimize a multivariate function we need to use ```optim()```,
+which requires us to provide an initial value.  From the contour graph
+we can see that there is a local minimum near $(0.1,-2)$ so we can use
+that:
+
+```{r}
+optim(c(0.1,-2),f)
+```
+
+So the idiom above has found a minimum at $(0.32,-2.12)$.  To verify
+this, we plot the function in a small region around this point:
 
 
+```{r}
+xvals <- seq(from = 0.32-0.1, to = 0.32+0.1,len=100)
+yvals <- seq(from =-2.12-0.1, to =-2.12+0.1,len=100)
+jj <- expand.grid(xvals,yvals)
+M <- apply(jj,1,f)     # apply the function f() to jj
+M <- matrix(M,100,100) # wrap M up into a matrix
+par(pty="s")
+contour(xvals,yvals,M,asp=1,xlim=range(xvals),ylim=range(yvals))
+points(0.32,-2.12,pch=16,col='red')
+```
 
+In the above, the point marked is exactly in the center of the contour
+lines, as it should be.
 
-
-
-
+The function has another local minimum: can you find it?
