@@ -3,7 +3,7 @@ output:
   pdf_document: default
   html_document: default
 ---
-# Multivariate calculus {#multivariate_calculus}
+# Multivariate differentiation {#multivariate_differentiation}
 
 In the previous chapter we considered functions such as
 $f(x)=x^2+\sin(x)$ in which we take a single variable $x$ and function

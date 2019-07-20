@@ -3,19 +3,17 @@ output:
   pdf_document: default
   html_document: default
 ---
-# Introduction to calculus, univariate {#calculus}
+#  Univariate differentiation {#calculus}
 
 \newcommand{\prob}[1]{\operatorname{\mathrm{Prob}}\left({#1}\right)}
 \newcommand{\like}[1]{\operatorname{\mathcal{L}}\left(#1\right)}
 \newcommand{\supp}[1]{\operatorname{\mathcal{S}}\left(#1\right)}
 
-
 \newcommand{\likeval}{\mathcal{L}}
 \newcommand{\suppval}{\mathcal{S}}
 
 
-## Univariate calculus
-
+## Introduction
 
 (There are many many online resources for calculus at every level of
 sophistication, ranging from secondary school material to exterior

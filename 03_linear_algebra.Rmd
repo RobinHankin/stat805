@@ -1,5 +1,187 @@
 # Linear algebra {#linear}
  
+\newcommand{\bx}{\mathbf x}
+\newcommand{\by}{\mathbf y}
+\newcommand{\norm}[1]{\left\| #1 \right\|}
+
+Linear algebra is an important component for modern data analysis and
+understanding it is vital for analytics.  The concepts included here
+are useful over and over again when doing pretty much any statistical
+work.
+
+This resource is an informal guide to linear algebra using R.  For a
+formal development of vector spaces, see Hartley and Hawkes, in the
+references section.
 
 
-Linear algebra is an important component for modern data analysis and understanding it is vital for analytics.
+## Vectors
+
+In physics, a vector is a three-dimensional arrow conventionally
+represented by a triple of numbers representing the $x$, $y$, and $z$
+components, as in $\left(3,7,-2\right)$.  
+However, in mathematics and statistics a vector can have any number of
+components, as in $\left(6,-5,1.2,22.1,-7\right)$.  Vectors are
+usually written in bold face, thus distinguishing ${\mathbf v}$ (a
+vector) from $v$ (a scalar).  The R programming language has a rich
+set of functionality for dealing with vectors.
+
+```{r}
+v1 <- c(5,6,-10,3,5)   # v1 has length 5
+100 + v1               # adding a scalar to each element
+
+v2 <- c(2,-6,12,4,3)   # v2 also has length 5
+v1+v2                  # adding two vectors component-wise
+v1*v2                  # multiplication
+```
+
+Vectors are *astonishingly* useful in statistics.  For example, 1000
+independent observations from a Gaussian distribution is simply a
+vector of length 1000.  We can perform many operations on such a vector:
+
+```{r}
+v3 <- rnorm(1000)
+sum(v3)
+max(v3)
+prod(v3)
+v3[8]     # extract just element number 8
+```
+
+and slightly more sophisticated techniques would include:
+
+```{r}
+v4 <- c(5,9,2,1,4,5,7,2,2,2,2)
+v4
+v4[4:6] <- -5    # replace elements 4,5,6 with -5
+v4               # verify
+```
+
+
+## Mathematical notation for vectors
+
+In mathematics and statistics, we often denote a vector using
+subscript notation.  If ${\mathbf x} = \left(3,-4,6,3,-8\right)$, a
+vector of length 5, we might indicate this as ${\mathbf
+x}=\left(x_1,x_2,x_3,x_4,x_5\right)$; the subscript tells us which
+element we are referring to.  So for example $x_2=-4$.
+
+In general we can use a letter (conventionally $i$ or $j$) to denote
+the number of the element we are interested in, as in $x_i$; with the
+understanding that $i$ can take any value from 1-5.  A longer vector
+will have a greater range of acceptable values for $i$.
+
+The advantage of this system is that we can use mathematical notation,
+for example the sum of the elements of ${\mathbf x}$ is $\sum_{i=1}^5
+x_i$ [remember that the R notation is just ```sum(x)```], and we will
+see that this can be used very profitably with matrices.  Note that
+although technically one needs to specify both the letter $i$ and the
+limits of the sum, in practice these are often omitted:
+
+
+\[\sum_{i=1}^5 x_i\qquad\mbox{is same thing as}\qquad\sum x_i\]
+
+## Norm of a vector
+
+Quite often, we want to quantify how "big" a vector is.  We denote
+this by summing the *squares* of the elements and write
+
+\[
+\norm{\bx} = \sqrt{\sum x_i^2}\]
+
+or, better,
+
+\[
+\norm{\bx}^2=\sum x_i^2\]
+
+Other notations you might see are $\norm{\bx}_2$ and sometimes (in
+older books) $\operatorname{Norm}\left(\bx\right)$.
+
+Calculating the norm of a vector is dead easy in R:
+
+```{r}
+x <- rnorm(10)
+x
+sqrt(sum(x^2))
+```
+
+### Verification of norm
+
+It is not obvious how to verify that the norm function is behaving as
+expected, because the formula (and indeed the R idiom) is so simple.
+There is little scope for error.  However, we can use one algebraic
+feature of the norm, the *triangle inequality*, which states that, for
+any vectors $\bx,\by$ we have
+
+\[\norm{\bx+\by}\leq\norm{\bx}+\norm{\by}
+\]
+
+```{r}
+x <- rnorm(20)
+y <- rnorm(20)  # same size as x
+sqrt(sum((x+y)^2)) <= sqrt(sum(x^2)) + sqrt(sum(y^2)) # should be TRUE
+```
+
+The professional uses a loop to do this over and over again, with
+differently sized random vectors each time:
+
+
+```{r}
+for(i in 1:10){  # or as many as you like
+	n <- sample(20,1)  # a random number
+	x <- rnorm(n)
+	y <- rnorm(n)
+	stopifnot(sqrt(sum((x+y)^2)) <= sqrt(sum(x^2)) + sqrt(sum(y^2)))
+}
+```
+
+
+## Dot product of two vectors.
+
+In physics we have three-dimensional vectors
+$\bx=\left(x_1,x_2,x_3\right)$ and $\by=\left(y_1,y_2,y_3\right)$ and
+sometimes we wish to calculate the angle between them.  To do this we
+define a new concept, the *dot product*, written $\bx\cdot\by$.  This
+is defined as
+
+
+\[
+\bx\cdot\by=\sum\left(x_iy_i\right)
+\]
+
+Note that this definition, like the norm, is not restricted to
+three-dimensional vectors.  Other notation that you might see would
+include $\left<\bx,\by\right>$ or even
+$\left<\bx|\by\right>$ and sometimes $\bx^T\by$ or
+$\bx^\dagger\by$.
+
+
+Again, the R idiom is dead easy:
+
+```{r}
+x <- c(3,4,5,2,2)
+y <- c(-4,3,2,-4,-7)
+sum(x*y)
+```
+
+It is obvious that $\norm{\bx}^2=\bx\cdot\bx$.  One reason that the
+dot product is important is that we can use it to calculate the angle
+between two vectors.  In 3D space if the angle between two vectors is
+$\theta$ we have
+
+\[
+\cos\theta=\frac{\bx\cdot\by}{\sqrt{(\bx\cdot\bx)(\by\cdot\by)}}
+\]
+
+
+
+and this formula works for vectors of any length.  Note that the angle
+between any vector and itself satisfies $\cos\theta=1$, or $\theta=0$.
+
+If two vectors $\bx,\by$ have $\bx\cdot\by=0$ then we may say
+$\theta=\pi/2$ (a right angle, $90^\circ$); the vectors are
+*orthogonal*.  This is a useful and important property of vectors to
+which we will return.
+
+
+## Calculus
+
+The formulae for partial differentiation
