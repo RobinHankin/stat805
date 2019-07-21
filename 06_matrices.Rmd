@@ -60,6 +60,18 @@ M[1,1] <- 1000
 M
 ```
 
+## Matrix transpose
+
+To take the transpose of a matrix, we exchange rows for columns.  We
+write $A'$ or $A^T$ or sometimes $\operatorname{tr}(A)$ for the
+transpose of $A$, and in R we use function ```t()```:
+
+```{r}
+M
+t(M)
+```
+
+In index notation, if $B=A^T$ then $B_{ij}=A_{ji}$.
 
 ## Types of matrices
 
@@ -121,9 +133,26 @@ In R:
 diag(1:8)
 ```
 
+A diagonal matrix must be square.
 
-A diagonal matrix must be square.  We will see other types of matrices
-later in the chapter.
+### Symmetrical matrices
+
+A symmetrical matrix is equal to its own transpose: matrix $A$ is
+symmetrical if $A^T=A$.  A symmetrical matrix must be square.  For
+example
+
+```{r}
+A <-    # define a symmetrical matrix...
+matrix(c(
+  1,4,5,
+  4,0,2,
+  5,2,5),3,3)
+A
+all(A ==  t(A)) #... and verify that it is symmetrical
+```
+
+
+We will see other types of matrices later in the chapter.
 
 
 ## Vector space operations on matrices
@@ -154,8 +183,6 @@ try(matrix(1:6,2,3) + matrix(0,2,4))
 ```
 
 
-
-
 ## Matrix multiplication
 
 Matrices can be multiplied together.  The rules for matrix
@@ -164,7 +191,8 @@ Given two matrices $A$ and $B$, we define the *matrix product* $AB$ as
 follows.
 
 If $A$ is $n\times m$ (that is, $A$ has $n$ rows and $m$ columns), and
-$B$ is $m\times p$, then the matrix produce $C=AB$ is defined as having elements
+$B$ is $m\times p$, then the matrix produce $C=AB$ is defined as
+having elements
 
 $$
 c_{ij} = a_{i1}b_{1j}+a_{i2}b_{2j}+\cdots+a_{im}b_{mj}=
@@ -204,4 +232,21 @@ not even defined:
 
 ```{r}
 try(B %*% A)
+```
+
+(in the above, the result is not defined because the matrices do not
+satisfy the rule for matrix multiplication, viz ``number of _columns_
+of the first matrix must be equal to the number of _rows_ of the
+second''.
+
+Even when $AB$ and $B$ are both defined (a common case is when $A$ and
+$B$ are both square matrices of the same size), the result will
+differ:
+
+
+```{r}
+A <- matrix(rnorm(25),5,5)
+B <- matrix(rnorm(25),5,5)
+A %*% B
+B %*% A
 ```
