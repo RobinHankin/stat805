@@ -155,7 +155,7 @@ M <- matrix(M,100,100) # wrap M up into a matrix
 str(M)                 # str() summarises R objects
 ```
 
-We can view M using ```persp()```:
+We can view M using ```contour()```:
 
 ```{r}
 contour(xvals,yvals,M,nlevels=30,xlim=c(-5,5),ylim=c(-5,5),asp=1,axes=FALSE)

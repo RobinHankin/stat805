@@ -1,0 +1,46 @@
+---
+output:
+  pdf_document: default
+  html_document: default
+---
+# Multivariate integration {#multivariate_integration}
+
+
+
+Suppose we have a function of two variables, $x$ and $y$ and wish to
+find the volume between the function's surface and the plane $z=0$.
+Consider again the function discussed in chapter 2:
+
+\[
+f(x,y) = x^2+y^2 + x + 4y + \sin(xy)
+\]
+
+
+```{r}
+f <- function(v){
+  x <- v[1]
+  y <- v[2]
+  return(x^2+y^2 + x + 4*y + sin(x*y))
+}
+```
+
+We will visualise $f()$ using ```persp()```:
+
+```{r}
+xvals <- seq(from = -2, to = +2, len=100)
+yvals <- seq(from = -2, to = +2, len=100)
+jj <- expand.grid(xvals,yvals)
+
+M <- apply(jj,1,f)     # apply the function f() to jj
+M <- matrix(M,100,100) # wrap M up into a matrix 
+persp(xvals,yvals,M)
+```
+
+To find the volume $V$ enclosed we need an iterated integral:
+
+
+\[
+\int_{x=-2}^2
+\int_{y=-2}^2
+\left(x^2+y^2 + x + 4y + \sin(xy)\right)dy\,dx
+\]
