@@ -1,0 +1,207 @@
+# Linear algebra: matrices {#matrices}
+ 
+
+A *matrix* is a block of numbers, as in
+
+$$
+\left(\begin{array}{ccc} 
+0 & 5 & 75\\
+3 & -1 & -3
+\end{array}\right)
+$$
+
+We can view a matrix as a bunch of column vectors, written
+side-by-side.  A matrix can have any number of rows or columns.
+Matrices are *astonishingly* useful objects in mathematics and
+statistics, and their study is well worth while.
+You will not be surprised to learn that R includes a vast range of
+functionality for working with matrices.
+
+To create the matrix above in R, we could use:
+
+```{r}
+matrix(c(0,3,5,-1,75,3),2,3)
+matrix(c(0,5,75,3,-1,-3),2,3,byrow=TRUE)
+cbind(c(0,3),c(5,-1),c(75,-3))
+rbind(c(0,5,75,3),c(-1,-3),2,3)
+```
+
+and indeed there are many other ways (arguments ```2``` and ```3```
+refer to the number of rows and columns respectively).
+
+## Index notation for matrices
+
+Given a matrix $M$ as in 
+
+$$
+M=\left(\begin{array}{ccc} 
+0 & 5 & 75\\
+2 & 35 & 76\\
+5 & -52 & 79\\
+3 & -1 & -3
+\end{array}\right)
+$$
+
+We can refer to individual elements using $M_{ij}$ which refers to row
+$i$, column $j$.  Thus in the example above we would have $M_{11}=0$,
+$M_{22}=35$, $M_{43}=-3$, and so on.  In R we say ```M[i,j]``` instead
+of $M_{ij}$:
+
+```{r}
+M <- matrix(c(
+  0 ,   5 , 75,
+  2 ,  35 , 76,
+  5 , -52 , 79,
+  3 ,  -1 , -3),
+  4,3,byrow=TRUE)
+M
+M[2,3]
+M[1,1] <- 1000
+M
+```
+
+
+## Types of matrices
+
+### The zero matrix
+
+The zero matrix has all entries zero:
+
+```{r}
+matrix(0,5,6)
+```
+
+### Square matrices
+
+A *square* matrix has the same number of rows as columns, as in:
+
+$$
+\left(\begin{array}{ccc} 
+3 & 1  & 1\\ 
+3 & 1  & 1\\ 
+0 & 5 & 75\\
+\end{array}\right)
+$$
+
+A *diagonal* matrix has nonzero entries only along the main diagonal
+as in:
+
+
+$$
+\left(\begin{array}{cccc} 
+3 &  0  & 0  & 0\\ 
+0 & -1  & 0  & 0\\ 
+0 &  0  & 7  & 0\\ 
+0 &  0  & 0  & 2\\ 
+\end{array}\right)
+$$
+
+
+In R:
+
+```{r}
+diag(c(3,-1,7,2))
+```
+
+If we have a very large matrix we indicate continuation using dots, as in
+
+
+$$
+\left(\begin{array}{cccc} 
+1 &  0  & \cdots & 0\\ 
+0 &  2  & \cdots  & 0\\ 
+\vdots &\vdots &\ddots&\vdots\\ 
+0 &  0 &\cdots&8
+\end{array}\right)
+$$
+
+In R:
+
+```{r}
+diag(1:8)
+```
+
+
+A diagonal matrix must be square.  We will see other types of matrices
+later in the chapter.
+
+
+## Vector space operations on matrices
+
+### Scalar multiplication
+
+Matrices multiplied by a scalar as one might
+expect:
+
+```{r}
+M <- matrix(1:30,5,6)
+M
+M*7
+```
+
+### Matrix addition and subtraction
+
+Matrices *of the same size*  may be added together:
+
+```{r}
+matrix(1:6,2,3) + matrix(100,2,3)
+```
+
+Adding matrices of different sizes gives an error:
+
+```{r}
+try(matrix(1:6,2,3) + matrix(0,2,4))
+```
+
+
+
+
+## Matrix multiplication
+
+Matrices can be multiplied together.  The rules for matrix
+multiplication seem strange, but make a powerful analyical method.
+Given two matrices $A$ and $B$, we define the *matrix product* $AB$ as
+follows.
+
+If $A$ is $n\times m$ (that is, $A$ has $n$ rows and $m$ columns), and
+$B$ is $m\times p$, then the matrix produce $C=AB$ is defined as having elements
+
+$$
+c_{ij} = a_{i1}b_{1j}+a_{i2}b_{2j}+\cdots+a_{im}b_{mj}=
+\sum_{k=1}^ma_{ik}b_{kj}
+=\sum a_{ik}b_{kj}
+$$
+
+Note that the number of _columns_ of $A$ must be equal to the number
+of _rows_ of $B$.  See the following diagram (taken from Wikipedia):
+
+\includegraphics{626px-Matrix_multiplication_diagram_2.svg}
+
+For example, in R we might say
+
+```{r}
+A <- matrix(1:6,2,3)
+B <- matrix(15:1,3,5)
+A
+B
+A %*% B
+```
+
+Note carefully that matrix multiplication uses ```%*%``` (an ordinary
+```*``` means pointwise multiplication.  Never ever ever ever ever
+ever ever ever ever ever ever ever ever ever ever ever ever ever ever
+ever ever ever ever ever ever ever ever ever ever ever ever ever ever
+ever ever ever ever ever ever ever ever ever ever ever ever ever ever
+ever ever ever ever ever ever ever ever ever ever use this, unless you
+have a Fields medal, and even then don't use it.  Pointwise
+multiplication will poison your mind, give you a parking ticket,
+borrow your car and not fill it up with petrol, tread on your shoes,
+find your fridge and drink all your beer).
+
+Note even more carefully that matrix multiplication is not commutative
+in the sense that, in general, $AB\neq BA$.  In case above, $BA$ is
+not even defined:
+
+```{r}
+try(B %*% A)
+```
