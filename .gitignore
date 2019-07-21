@@ -2,3 +2,11 @@
 .Rhistory
 .RData
 .Ruserdata
+_book/*
+_book/libs/*
+_book/stat805_manual_files/*
+_bookdown_files/*
+_main.Rmd
+packages.bib
+stat805.Rproj
+stat805_manual.*
