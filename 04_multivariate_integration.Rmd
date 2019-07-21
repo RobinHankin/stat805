@@ -63,7 +63,7 @@ I &=&
 \end{aligned}
 $$
 
-or about $42\frac{2}{3}$.  We can accomplish this calculation
+or $42\frac{2}{3}\simeq 42.67$.  We can accomplish this calculation
 numerically using the ```adaptIntegrate()``` function of the
 ```cubature``` R package:
 

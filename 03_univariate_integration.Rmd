@@ -68,8 +68,8 @@ x <- seq(from=1,to=3,by=dx)
 sum(f(x)*dx)
 ```
 
-showing a small discrepancy from the true value of $8.667$.  It is
-possible to reduce the error by using a smaller value for ```dx```.
+showing a small discrepancy from the true value of $8\frac{2}{3}$.  It
+is possible to reduce the error by using a smaller value for ```dx```.
 
 ### Method 3, numerical integration
 
@@ -81,7 +81,9 @@ integrate(f,1,3)
 ```
 
 showing a very accurate result, with a (very small) estimate of the
-likely error.
+likely error.  Function ```integrate()``` uses a range of
+sophisticated techniques to accurately and effeciently evaluate
+univariate integrals.
 
 ## Another example
 
