@@ -149,8 +149,8 @@ is defined as
 
 Note that this definition, like the norm, is not restricted to
 three-dimensional vectors.  Other notation that you might see would
-include $\left<\bx,\by\right>$ or even
-$\left<\bx|\by\right>$ and sometimes $\bx^T\by$ or
+include $\langle\bx,\by\rangle$ or even
+$\langle\bx|\by\rangle$ and sometimes $\bx^T\by$ or
 $\bx^\dagger\by$.
 
 

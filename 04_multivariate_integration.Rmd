@@ -40,7 +40,36 @@ To find the volume $V$ enclosed we need an iterated integral:
 
 
 \[
-\int_{x=-2}^2
-\int_{y=-2}^2
+I=
+\int_{-2\leq x,y\leq 2}
 \left(x^2+y^2 + x + 4y + \sin(xy)\right)dy\,dx
 \]
+
+[See Hubbard and Hubbard for a rigorous approach; the issue is not
+straightforward].
+
+Analytically 
+
+
+$$
+\begin{aligned}
+I &=&
+\int_{x=-2}^2
+\int_{y=-2}^2
+\left(x^2+y^2 + x + 4y + \sin(xy)\right)\,dy\,dx\\
+ &=& \int_{x=-2}^2 \left(4x^2+4x+\frac{16}{3}\right)\,dx\\
+ &=& \left[\frac{4}{3}x^3 +\frac{64}{3}\right]_{-2}^{+2}\\
+ &=& \frac{128}{3}
+\end{aligned}
+$$
+
+or about $42\frac{2}{3}$.  We can accomplish this calculation
+numerically using the ```adaptIntegrate()``` function of the
+```cubature``` R package:
+
+```{r}
+library("cubature")
+adaptIntegrate(f, c(-2,-2),c(2,2))
+```
+
+showing close agreement.
