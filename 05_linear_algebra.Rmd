@@ -1,4 +1,4 @@
-# Linear algebra {#linear}
+# Linear algebra: vectors {#linear}
  
 \newcommand{\bx}{\mathbf x}
 \newcommand{\by}{\mathbf y}
@@ -21,8 +21,8 @@ represented by a triple of numbers representing the $x$, $y$, and $z$
 components, as in $\left(3,7,-2\right)$.  
 However, in mathematics and statistics a vector can have any number of
 components, as in $\left(6,-5,1.2,22.1,-7\right)$.  Vectors are
-usually written in bold face, thus distinguishing ${\mathbf v}$ (a
-vector) from $v$ (a scalar).  The R programming language has a rich
+usually written in bold face, thus distinguishing $\bx$ (a
+vector) from $x$ (a scalar).  The R programming language has a rich
 set of functionality for dealing with vectors.
 
 ```{r}
@@ -59,9 +59,9 @@ v4               # verify
 ## Mathematical notation for vectors
 
 In mathematics and statistics, we often denote a vector using
-subscript notation.  If ${\mathbf x} = \left(3,-4,6,3,-8\right)$, a
-vector of length 5, we might indicate this as ${\mathbf
-x}=\left(x_1,x_2,x_3,x_4,x_5\right)$; the subscript tells us which
+subscript notation.  If $\bx = \left(3,-4,6,3,-8\right)$, a vector of
+length 5, we might indicate this as
+$\bx=\left(x_1,x_2,x_3,x_4,x_5\right)$; the subscript tells us which
 element we are referring to.  So for example $x_2=-4$.
 
 In general we can use a letter (conventionally $i$ or $j$) to denote
@@ -70,9 +70,9 @@ understanding that $i$ can take any value from 1-5.  A longer vector
 will have a greater range of acceptable values for $i$.
 
 The advantage of this system is that we can use mathematical notation,
-for example the sum of the elements of ${\mathbf x}$ is $\sum_{i=1}^5
-x_i$ [remember that the R notation is just ```sum(x)```], and we will
-see that this can be used very profitably with matrices.  Note that
+for example the sum of the elements of $\bx$ is $\sum_{i=1}^5 x_i$
+[remember that the R notation is just ```sum(x)```], and we will see
+that this can be used very profitably with matrices.  Note that
 although technically one needs to specify both the letter $i$ and the
 limits of the sum, in practice these are often omitted:
 
@@ -184,4 +184,54 @@ which we will return.
 
 ## Calculus
 
-The formulae for partial differentiation
+The formulae for partial differentiation apply to linear algebra
+constructs in a simple way.  We have
+
+* $\frac{\partial\norm{\bx}}{x_i} = \frac{x_i}{\norm{\bx}}$
+* $\frac{\partial\bx\cdot\by}{\partial x_i} = y_i$
+
+which you can derive algebraically, but here we will verify them
+numerically.  We will start with some random vectors:
+
+```{r}
+x <- rnorm(9) 
+y <- rnorm(9)    # just random elements
+dx <- 1e-3        # typical small value
+i <- 5             # choose element number 5
+xpd <- x              #  xpd = "x plus delta"
+xpd[5] <- xpd[5] + dx   # actually x+dx
+```
+
+and then we will check these identities.  Firstly
+$\norm{\bx+\delta\bx}\simeq\norm{\bx}+\delta*\frac{x_i}{\norm{\bx}}$:
+
+
+```{r}
+N <- sqrt(sum(x^2))
+LHS <-  N + dx*x[5]/N     # LHS = 'left hand side'
+RHS <- sqrt(sum(xpd^2))     # RHS = 'right hand side'
+print(c(LHS=LHS,RHS=RHS))   # close agreement
+```
+
+and secondly that
+$\left(\bx+\delta\bx\right)\cdot\by\simeq\bx\cdot\by+\delta*y_i$:
+
+
+```{r}
+LHS <- sum(x*y)             # LHS = 'left hand side'
+RHS <- sum(xpd*y)            # RHS = 'right hand side'
+print(c(LHS=LHS,RHS=RHS))   # close agreement
+```
+
+The professional uses full vectorization:
+
+```{r}
+norm <- function(x){sqrt(sum(x^2))}
+x <- rnorm(9)
+N <- norm(x)
+dx <- 1e-3 * rnorm(9)
+LHS <- N + sum(x*dx)/N
+RHS <- norm(x+dx)
+print(c(LHS=LHS,RHS=RHS))   # close agreement
+```
+
