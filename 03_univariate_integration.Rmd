@@ -71,7 +71,7 @@ sum(f(x)*dx)
 showing a small discrepancy from the true value of $8\frac{2}{3}$.  It
 is possible to reduce the error by using a smaller value for ```dx```.
 
-### Method 3, numerical integration
+### Method 3: numerical integration
 
 R has lots of very very sophisticated routines to integrate areas
 using very accurate techniques:

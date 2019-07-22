@@ -85,15 +85,15 @@ formula is correct in the case of $f=f(x,y)$.
 ### Verification
 
 ```{r}
-f <- function(x,y){         # Function f() takes *two* arguments
-   x^2 + x/y                 # the formula returned
-}                             # remember to close braces
-x <- 2                         # just a randomish point
-y <- 3                          # (x,y) = c(2,3)
-f(x,y)                           # evaluate the function at (x,y)
-dx <- 1e-6                        # arbitrary small value for delta x
-dy <- 1e-6                         # arbitrary small value for delta y
-f(x+dx,y+dy)                        # exact 
+f <- function(x,y){       # Function f() takes *two* arguments
+   x^2 + x/y              # the formula returned
+}                         # remember to close braces
+x <- 2                    # just a randomish point
+y <- 3                    # (x,y) = c(2,3)
+f(x,y)                    # evaluate the function at (x,y)
+dx <- 1e-6                # arbitrary small value for delta x
+dy <- 1e-6                # arbitrary small value for delta y
+f(x+dx,y+dy)              # exact 
 f(x,y) + (2*x + 1/y)*dx - (x/y^2)*dy # approximate value
 ```
 
@@ -107,9 +107,9 @@ f(d+ 1:9) - f(1:9)
 sum(d *2*(1:9))
 ```
 
-See if you can figure out what is going on here.  Note that,
-mathematically, ```f()``` will take any number arguments (here 9).
-
+See if you can figure out what is going on here.  Note that, in R
+idiom, ```f()``` takes a *single* argument which is in this case a
+vector of length 9.
 
 ## Multivariate root-finding
 
@@ -201,6 +201,5 @@ points(0.32,-2.12,pch=16,col='red')
 ```
 
 In the above, the point marked is exactly in the center of the contour
-lines, as it should be.
-
-The function has another local minimum: can you find it?
+lines, as it should be.  The function has another local minimum: can
+you find it?

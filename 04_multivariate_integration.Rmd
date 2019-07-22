@@ -18,8 +18,8 @@ f(x,y) = x^2+y^2 + x + 4y + \sin(xy)
 
 ```{r}
 f <- function(v){
-  x <- v[1]
-  y <- v[2]
+  x <- v[1]   # x is element 1 of vector v
+  y <- v[2]   # y is element 2 of vector v
   return(x^2+y^2 + x + 4*y + sin(x*y))
 }
 ```
@@ -33,7 +33,7 @@ jj <- expand.grid(xvals,yvals)
 
 M <- apply(jj,1,f)     # apply the function f() to jj
 M <- matrix(M,100,100) # wrap M up into a matrix 
-persp(xvals,yvals,M)
+persp(xvals,yvals,M)   # show a perspective view of f(x,y)
 ```
 
 To find the volume $V$ enclosed we need an iterated integral:

@@ -31,16 +31,17 @@ and
 
 respectively.
 
-This course lectures have been recorded and the entire playlist is
-available on YouTube at:
+The statistics component of STAT805 has been recorded and the entire
+playlist is available on YouTube at:
 
 ```{block2, type='youtube'}
 <https://www.youtube.com/playlist?list=PL018X5Hlr4RkgE65Pg93TFY-32KCVpW84>
 ```
 
-which you may view at your leisure.  The URL should be clickable in
-this and similar boxes throughought the manual.  Note that the course
-as delivered will vary slightly from the YouTube videos and in
+which you may view at your leisure (the mathematics component should
+be added ast some point in the future).  The URL should be clickable
+in this and similar boxes throughought the manual.  Note that the
+course as delivered will vary slightly from the YouTube videos and in
 particular the material might be presented in a different order; but
 each class is a reasonably self-contained unit, split into three or
 four parts.  The videos are also available in a slightly different
@@ -55,8 +56,8 @@ This manual is distributed under the GNU GPL and is available at
 
 ```https://github.com/RobinHankin/stat805```
 
-Please feel free to send corrections, bug reports, fanmail, etc to the
-issues page
+Please feel free to send corrections, bug reports, fanmail, cheques,
+etc to the issues page:
 
 ```https://github.com/RobinHankin/stat805/issues```
 
