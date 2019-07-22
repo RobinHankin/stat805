@@ -378,7 +378,7 @@ A <- matrix(rnorm(16),4,4)
 B <- matrix(rnorm(16),4,4)
 LHS <- det(A %*% B)
 RHS <- det(A) * det(B)
-c(LHS,RHS,LHS-RHS)
+c(LHS=LHS, RHS=RHS, diff=LHS-RHS)
 ```
 
 Taking a transpose of a matrix does not change its determinant:
@@ -454,10 +454,10 @@ debugging so we have to be sneaky:
 
 ```{r}
 M<-matrix(c(
-3, 3,0, 0,
-1,-2,0, 0,
-0, 0,7, 0,
-9, 2,3,-4),4,4,byrow=TRUE)
+3, 3, 0, 0,
+1,-2, 0, 0,
+0, 0, 7, 0,
+9, 2, 3,-4),4,4,byrow=TRUE)
 M
 sum(diag(M))
 ```
@@ -475,7 +475,7 @@ $$
 \operatorname{tr}(A)+
 \operatorname{tr}(B);\qquad
 \operatorname{tr}(xA)=x
-x\operatorname{tr}(A)$$
+\operatorname{tr}(A)$$
 
 ### The trace trick
 
@@ -519,13 +519,94 @@ Formally, given a matrix $A$, can we find a matrix $B$ such that
 $AB=I$, the identity matrix?
 
 If we can find such a matrix, we usually write $A^{-1}$ instead of
-$B$, so we have that $A A^{-1}=I$ (and it turns out that A^{-1}A=I$ as
-well).  We know that the determinant of the identity is just 1, so we
-have
+$B$, so we have that $A A^{-1}=I$ (and it turns out that $A^{-1}A=I$
+as well).  We know that the determinant of the identity is just 1, so
+we have
 
-$$
-|A||A^{-1}|=|AA^{-1}|=|I|=1$$
+$$|A||A^{-1}|=|AA^{-1}|=|I|=1$$
 
 so $|A^{-1}| = 1/|A|$. If $|A|=0$ then matrix $A$ will not have an
 inverse (this is like taking a reciprocal of zero in regular
-arithmetic).
+arithmetic).  It turns out that if the determinant of a matrix $A$ is
+nonzero, then $A$ will have an inverse.  Needless to say, calculating
+the inverse of a matrix is a difficult matter, but R can help:
+
+
+```{r}
+A <- matrix(rnorm(9),3,3)
+A
+solve(A)
+A %*% solve(A)  # verify
+solve(A) %*% A  # verify
+```
+
+So in the above, we see (to numerical precision) the identity matrix.
+
+## Eigenvalues and eigenvectors
+
+If we are given a square matrix $A$ then this maps vectors of length
+$n$ to other vectors of length $n$.  It is frequently of great
+interest to find a vector ${\mathbf x}$ that satisfies
+
+$$A{\mathbf x}=\lambda{\mathbf x}$$
+
+for some scalar $\lambda$.  Standard terminology is that $\lambda$ is
+an *eigenvalue* of $A$ and ${\mathbf x}$ is an *eigenvector*.  What
+this equation says is that matrix multiplication by $A$ is the same as
+scalar multiplication by $\lambda$: the direction of ${\mathbf x}$ is
+not changed, only the magnitude.
+
+This equation is known as the *eigenvalue* equation.  Needless to say,
+this is a complicated and difficult equation but R can calculate
+eigenvalues and eigenvectors for any square matrix if they exist using
+the ```eigen()``` builtin function:
+
+```{r}
+A <- matrix(c(5,2,1,2,3,0,1,0,6),3,3)
+A
+eigen(A)
+```
+
+(note that matrix $A$ is symmetric, which makes things considerably
+simpler).  The eigenvalues are given by the ```$values``` component
+and the eigenvectors are given by the _*columns* of the ```$vectors```
+component.  Verify:
+
+
+```{r}
+vec1 <- eigen(A)$vectors[,1]  # First eigenvector
+val1 <- eigen(A)$values[1]    # First eigenvalue
+vec1
+val1
+LHS <- A   %*% vec1           # matrix multiplication
+RHS <- val1 *  vec1           # scalar multiplication
+LHS <- c(LHS)                 # coerce to a vector
+cbind(LHS,RHS, diff=LHS-RHS)  # compare
+```
+
+If the eigenvalues are distinct (as will usually be the case), then
+the eigenvectors are orthogonal:
+
+```{r}
+vec1 <- eigen(A)$vectors[,1]  # First eigenvector
+vec2 <- eigen(A)$vectors[,2]  # Second eigenvector
+sum(vec1*vec2)                # should be zero
+```
+
+
+The professional verifies orthogonality in toto:
+
+```{R}
+evecs <- eigen(A)$vectors  # all eigenvectors together
+evals <- eigen(A)$values   # all eigenvalues together 
+crossprod(evecs)           # should be the identity matrix
+```
+
+and indeed the eigenvalue equation can be verified in one fell swoop:
+
+
+```{r}
+LHS <- A %*% evecs               # LHS of eigenvalue eqn
+RHS <- sweep(evecs,2,evals,"*")  # RHS of eigenvalue eqn
+LHS-RHS                           # should be zero
+```
