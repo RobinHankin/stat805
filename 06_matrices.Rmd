@@ -381,15 +381,24 @@ RHS <- det(A) * det(B)
 c(LHS,RHS,LHS-RHS)
 ```
 
-## Matrix identity
+Taking a transpose of a matrix does not change its determinant:
+$|A|=|A^T|$:
 
+```{r}
+M <- matrix(rnorm(16),4,4)
+det(M)
+det(t(M))
+```
+
+## The identity matrix
 
 Multiplication by 1 is easy: $x\times 1=x$, for any $x$.  Is there a
-matrix equivalent of this?  A little thought convinces you that
+matrix equivalent of this?  Is there a matrix $I$ that satisfies
+$MI=M$ for any matrix $M$?  A little thought convinces you that
 multiplication by a matrix with zero entries except for the main
-diagonal whose entries are "1" satisfies this.  This matrix is called
-the *identity* matrix, $I_n$ (where $n$ shows the number of rows in
-the matrix).
+diagonal whose entries are "1" satisfies this relationship.  This
+matrix is called the *identity* matrix, $I_n$ (where $n$ shows the
+number of rows in the matrix).  Algebraically we have
 
 
 $$I_n=
@@ -402,9 +411,121 @@ $$I_n=
 \end{array}\right)
 $$
 
-It is clear that the identity matrix is symmetrical and diagonal.  In
-R it is easy to create an identity matrix:
+and indeed it is clear that $IM=M$ as well.  It is clear that the
+identity matrix is symmetrical and diagonal.  In R it is easy to
+create an identity matrix:
 
 ```{r}
 diag(rep(1,7)) # 7x7 identity matrix
 ```
+
+We had better verify that the identity matrix satisfies the identity
+$MI=M$:
+
+
+```{r}
+M <- matrix(rnorm(49),7,7)  # random 7x7 matrix
+I <- diag(rep(1,7))         # 7x7 identity matrix
+max(abs(M %*% I - M))       # should be zero
+max(abs(I %*% M - M))       # 'I' is a left and right neutral element
+```
+
+### Properties of the identity matrix
+
+It should be clear that the identity matrix is symmetric and diagonal.
+The determinant of the identity matrix is 1.
+
+## Matrix trace
+
+The *trace* of a matrix $A$, written $\operatorname{tr}(A)$, is the
+sum of the diagonal elements.  Thus
+
+$$\operatorname{tr}
+\left(\begin{array}{cccc} 
+3 &  3  & 0  & 0\\ 
+1 &  -2  & 0  & 0\\ 
+0 &  0  & 7  & 0\\ 
+9 &  2  & 3  & -4\\ 
+\end{array}\right)=3-2+7-4=4$$
+
+
+R has a built-in function called ```trace()``` which is used for
+debugging so we have to be sneaky:
+
+```{r}
+M<-matrix(c(
+3, 3,0, 0,
+1,-2,0, 0,
+0, 0,7, 0,
+9, 2,3,-4),4,4,byrow=TRUE)
+M
+sum(diag(M))
+```
+
+It should be clear that the determinant of the identity matrix $I_n$
+is simply $n$.
+
+### Trace properties
+
+The trace of a matrix is equal to the trace of its transpose; the
+trace of a sum of matrices is the sum of the traces:
+
+$$
+\operatorname{tr}(A+B)=
+\operatorname{tr}(A)+
+\operatorname{tr}(B);\qquad
+\operatorname{tr}(xA)=x
+x\operatorname{tr}(A)$$
+
+### The trace trick
+
+The reason that trace is useful is that it satisfies the following
+identity:
+
+$$\operatorname{tr}(AB)
+=
+\operatorname{tr}(BA)$$
+
+Although this might look trivial or obvious, it is one of the most
+profound insights in the whole of mathematics and it is used again and
+again in advanced mathematics.  Observe carefully that the trace
+equation is true even if $A$ and $B$ are not themselves square:
+
+
+```{r}
+A <- matrix(1:6,2,3)
+B <- matrix(rnorm(6),3,2)
+A
+B
+LHS <- sum(diag(A %*% B))
+RHS <- sum(diag(B %*% A))
+c(LHS,RHS,LHS-RHS)
+```
+
+(work through the above by hand and you will see that the trace trick
+is little short of a miracle).  Even now, having been a professional
+mathematician for 30 years, I still get a kick out of this theorem.
+Like all the best mathematics, it is at once profoundly deep, yet
+stupefyingly obvious; and has a habit of cropping up where you least
+expect it.
+
+
+## Matrix inversion
+
+In numbers, it is easy to find a multiplicative inverse.  If we have
+the number $x$, then the inverse (reciprocal) is simply $\frac{1}{x}$,
+provided that $x\neq 0$.  Can we find a similar inverse for a matrix?
+Formally, given a matrix $A$, can we find a matrix $B$ such that
+$AB=I$, the identity matrix?
+
+If we can find such a matrix, we usually write $A^{-1}$ instead of
+$B$, so we have that $A A^{-1}=I$ (and it turns out that A^{-1}A=I$ as
+well).  We know that the determinant of the identity is just 1, so we
+have
+
+$$
+|A||A^{-1}|=|AA^{-1}|=|I|=1$$
+
+so $|A^{-1}| = 1/|A|$. If $|A|=0$ then matrix $A$ will not have an
+inverse (this is like taking a reciprocal of zero in regular
+arithmetic).
