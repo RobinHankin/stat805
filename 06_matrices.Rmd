@@ -182,7 +182,6 @@ Adding matrices of different sizes gives an error:
 try(matrix(1:6,2,3) + matrix(0,2,4))
 ```
 
-
 ## Matrix multiplication
 
 Matrices can be multiplied together.  The rules for matrix
@@ -222,9 +221,10 @@ ever ever ever ever ever ever ever ever ever ever ever ever ever ever
 ever ever ever ever ever ever ever ever ever ever ever ever ever ever
 ever ever ever ever ever ever ever ever ever ever use this, unless you
 have a Fields medal, and even then don't use it.  Pointwise
-multiplication will poison your mind, give you a parking ticket,
-borrow your car and not fill it up with petrol, tread on your shoes,
-find your fridge and drink all your beer).
+multiplication will give confusing and unhelpful results, poison your
+mind, give you a parking ticket, borrow your car and not fill it up
+with petrol, tread on your shoes, find your fridge and drink all your
+beer).
 
 Note even more carefully that matrix multiplication is not commutative
 in the sense that, in general, $AB\neq BA$.  In case above, $BA$ is
@@ -249,4 +249,160 @@ A <- matrix(rnorm(25),5,5)
 B <- matrix(rnorm(25),5,5)
 A %*% B
 B %*% A
+```
+
+
+### Multiplying a matrix by a vector
+
+It is usual to consider a vector as a column of numbers (not a row)
+which is why you will see vectors written like $(1,2,3)^T$.
+
+Mathematically if
+
+$$
+A=\left(
+\begin{array}{ccc}
+a_{11} & \cdots & a_{nn}\\
+\vdots&\ddots&\vdots\\
+a_{n1}&\cdots&a_{nn}
+\end{array}
+\right)\qquad
+{\mathbf x} = \left(
+\begin{array}{c}
+x_1\\x_2\\ \vdots\\ x_n
+\end{array}
+\right)
+$$
+
+Then we can calculate the product $A{\mathbf x}$ as
+
+$$
+A{\mathbf x}=\left(
+\begin{array}{c}
+a_{11}x_1+a_{12}x_2+\cdots a_{1n}x_n\\
+a_{12}x_1+a_{22}x_2+\cdots a_{2n}x_n\\
+\vdots\\
+a_{n1}x_1+a_{n2}x_2+\cdots a_{nn}x_n\\
+\end{array}
+\right)
+$$
+
+R makes this easy:
+
+
+```{r}
+A <- matrix(runif(12),3,4)
+x <- runif(4)
+A
+x
+```
+
+Note how the column vector ${\mathbf x}$ and $A{\mathbf x}$ are
+written by R in left-to-right vector notation, not the mathematician's
+column notation.
+
+## Determinant of a matrix
+
+Sometimes we need to know how "big" a square matrix is.  We might take
+the sum of a matrix's elements (or the squares of the elements), but
+this turns out not to be useful.  One very useful measure of a
+matrix's size is its *determinant*.
+
+The determinant of a square matrix $M$ is written
+$\operatorname{\det}(A)$, but you might see $\left|M\right|$
+sometimes, depending on the context.  The general definition of a
+matrix is somewhat technical but we can get a flavour of the concept
+by giving the determinant of $2\times 2$ matrix.
+
+$$
+\operatorname{\det}
+\left(
+\begin{array}{cc}
+a&b\\c&d\\
+\end{array}
+\right)=ad-bc
+$$
+
+If we view a $2\times 2$ matrix $A$ as mapping a 2D vector to another
+2D vector, then $|A|$ is the area that a unit square maps to:
+
+
+```{r}
+plot(c(0,5),c(0,5),type='n',asp=1)
+A <- matrix(c(1,2,0.5,3),2,2)
+A
+p <- matrix(c(0,0,1,1,0,1,1,0),4,2) # each row is a point
+polygon(p[,1],p[,2],col='gray')
+polygon(tcrossprod(p,A),col='red')
+legend("topleft",lty=1,pch=NA,lwd=6,col=c("gray","red"),legend=c("before","after"))
+```
+
+In the above, the area of the gray square is one (before the mapping)
+and the area of the red parallelogram (after the mapping) is tqual to
+the determinant of A, which is $1\times 3-2\times 0.5=2$:
+
+```{r}
+det(A)
+```
+
+Determinants of larger matrices can be defined but the mathematics
+gets involved.  For example the determinant of a $3\times 3$ matrix is
+
+$$
+\operatorname{det}\left(
+\begin{array}{ccc}a&b&c\\d&e&f\\g&h&i\end{array}\right)=
+aei + bfg + cdh - ceg - bdi - afh.
+$$
+
+(this corresponds to the volume of a unit cube after transformation by
+a matrix).  Larger matrices get much more complicated but fortunately
+R can handle even very large cases:
+
+
+```{r}
+M <- matrix(rnorm(400),20,20)  # a 20-by-20 matrix
+M[1:4,1:4]    # examine the top left corner 
+det(M)
+```
+
+### Properties of the determinant
+
+It is not obvious, but it is true (and very very useful), that the
+determinant of a matrix product is equal to the product of the
+determinants, viz $|AB|=|A|\times|B|$.  We can verify this in R
+easily:
+
+
+```{r}
+A <- matrix(rnorm(16),4,4)
+B <- matrix(rnorm(16),4,4)
+LHS <- det(A %*% B)
+RHS <- det(A) * det(B)
+c(LHS,RHS,LHS-RHS)
+```
+
+## Matrix identity
+
+
+Multiplication by 1 is easy: $x\times 1=x$, for any $x$.  Is there a
+matrix equivalent of this?  A little thought convinces you that
+multiplication by a matrix with zero entries except for the main
+diagonal whose entries are "1" satisfies this.  This matrix is called
+the *identity* matrix, $I_n$ (where $n$ shows the number of rows in
+the matrix).
+
+
+$$I_n=
+\left(\begin{array}{cccc} 
+1 &  0  & \cdots & 0\\ 
+0 &  1  & \cdots  & 0\\ 
+\vdots &\vdots &\ddots&\vdots\\ 
+0 &  0 &\cdots&1
+\end{array}\right)
+
+It is clear that the identity matrix is symmetrical and diagonal.  In
+R it is easy to create an identity matrix:
+
+```{r}
+diag(rep(1,7)) # 7x7 identity matrix
 ```
