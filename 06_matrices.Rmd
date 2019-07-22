@@ -393,12 +393,14 @@ the matrix).
 
 
 $$I_n=
-\left(\begin{array}{cccc} 
+\left(
+\begin{array}{cccc} 
 1 &  0  & \cdots & 0\\ 
 0 &  1  & \cdots  & 0\\ 
 \vdots &\vdots &\ddots&\vdots\\ 
 0 &  0 &\cdots&1
 \end{array}\right)
+$$
 
 It is clear that the identity matrix is symmetrical and diagonal.  In
 R it is easy to create an identity matrix:
