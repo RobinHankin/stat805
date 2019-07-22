@@ -103,8 +103,8 @@ differentiate it by algebra, we will use R to define a derivative
 numerically:
 
 ```{r}
-dx <- 1e-6   # notional small value
-fdash <- function(x){(f(x+dx)-f(x))/dx}  # direct implementation of f'
+dx <- 1e-6                                # notional small value
+fdash <- function(x){(f(x+dx)-f(x))/dx}  # from definition of f'
 plot(x,fdash(x),main="f'(x)")           # plot the derivative
 abline(0,0)                            # mark y=0 for reference
 ```

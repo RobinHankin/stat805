@@ -18,10 +18,10 @@ description: "This is the supplementary course manual for STAT805 (mathematics)"
 
 # Overview {-}
 
-This is the handbook for STAT805 (mathematics).  Details of the course structure,
-including assessment and timetables, may be found on AUTonline.  The
-whole course is based around R and RStudio which may be downloaded
-from
+This is the handbook for STAT805 (mathematics).  Details of the course
+structure, including assessment and timetables, may be found on
+AUTonline.  The whole course is based around R and RStudio which may
+be downloaded from
 
 ```https://cran.r-project.org/```
 

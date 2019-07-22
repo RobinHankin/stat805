@@ -46,10 +46,7 @@ I=
 \]
 
 [See Hubbard and Hubbard for a rigorous approach; the issue is not
-straightforward].
-
-Analytically 
-
+straightforward].  Analytically:
 
 $$
 \begin{aligned}
