@@ -310,13 +310,13 @@ this turns out not to be useful.  One very useful measure of a
 matrix's size is its *determinant*.
 
 The determinant of a square matrix $M$ is written
-$\operatorname{\det}(A)$, but you might see $\left|M\right|$
+$\operatorname{det}(A)$, but you might see $\left|M\right|$
 sometimes, depending on the context.  The general definition of a
 matrix is somewhat technical but we can get a flavour of the concept
 by giving the determinant of $2\times 2$ matrix.
 
 $$
-\operatorname{\det}
+\operatorname{det}
 \left(
 \begin{array}{cc}
 a&b\\c&d\\
