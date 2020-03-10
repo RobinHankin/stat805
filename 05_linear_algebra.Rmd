@@ -208,7 +208,7 @@ $\norm{\bx+\delta\bx}\simeq\norm{\bx}+\delta*\frac{x_i}{\norm{\bx}}$:
 
 ```{r}
 N <- sqrt(sum(x^2))
-LHS <-  N + dx*x[5]/N     # LHS = 'left hand side'
+LHS <-  N + dx*x[5]/N       # LHS = 'left hand side'
 RHS <- sqrt(sum(xpd^2))     # RHS = 'right hand side'
 print(c(LHS=LHS,RHS=RHS))   # close agreement
 ```
@@ -219,7 +219,7 @@ $\left(\bx+\delta\bx\right)\cdot\by\simeq\bx\cdot\by+\delta*y_i$:
 
 ```{r}
 LHS <- sum(x*y)             # LHS = 'left hand side'
-RHS <- sum(xpd*y)            # RHS = 'right hand side'
+RHS <- sum(xpd*y)           # RHS = 'right hand side'
 print(c(LHS=LHS,RHS=RHS))   # close agreement
 ```
 
@@ -235,3 +235,53 @@ RHS <- norm(x+dx)
 print(c(LHS=LHS,RHS=RHS))   # close agreement
 ```
 
+## Gradient of a scalar function
+
+
+If we have a scalar function which maps
+$\mathbb{R}^n\longrightarrow\mathbb{R}$, then we are sometimes
+interested in the gradient of this function.  If we have
+$f\left(x_1,x_2,\ldots,x_n\right)$, then we can differentiate with
+respect to $x_1,x_2,\ldots,x_n$ in turn and arrange these derivatives
+to form a vector.  We write
+
+\[\nabla f=\left[
+\frac{\partial f}{\partial x_1},
+\frac{\partial f}{\partial x_2},\ldots,
+\frac{\partial f}{\partial x_n}
+\right]
+\]
+
+(the upside-down triangle "$\nabla$" is sometimes called the
+differential operator del, sometimes nabla and sometimes (incorrectly)
+"grad").  For example, if $f(x_1,x_2,x_3,x_4)=x_1x_2 + x_3/x_4$ we
+would have
+
+\[
+\nabla f=\left[
+x_2,x_1,x_4^{-1},-x_3/x_4^2\right]
+\]
+
+Computer scientists would call this quantity a vector, but physicists
+and mathematicicans would not (for perfectly good technical reasons
+that are not part of this course).  Here we note that the expression
+above corresponds to a _row_ vector, not a conventional column vector.
+The beauty of this notation is the following approximate result:
+
+
+\[f\left(\bx+\delta\bx\right)\simeq f(\bx) + \nabla f\cdot\delta\bx.\]
+
+In the above, the final term uses a dot product (actually a matrix
+product if we remember that $\nabla$ returns a row vector).  We can
+test this in R easily:
+
+```{r}
+f <- function(v){v[1]*v[2] +v[3]/v[4]}
+nablaf <- function(v){c(v[2],v[1],1/v[4],-v[3]/v[4]^2)}
+x <- 1:4
+dx <- 1e-3*(4:1)
+
+LHS <- f(x+dx)                          # left hand side
+RHS <- f(x) + sum(nablaf(x)*dx)          # right hand side
+print(c(LHS=LHS,RHS=RHS,diff=LHS-RHS))    # close agreement
+```
