@@ -48,7 +48,6 @@ x <- seq(from=0,to=3,len=100)
 f <- function(x){x^2}
 plot(x,f(x),type='l')
 z <- seq(from=1,to=3,len=100)
-jj <- c(x,rev(x))
 polygon(c(z,rev(z)),c(z*0,f(rev(z))),col="red")
 ```
 
