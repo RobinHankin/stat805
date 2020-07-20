@@ -71,7 +71,7 @@ will have a greater range of acceptable values for $i$.
 
 The advantage of this system is that we can use mathematical notation,
 for example the sum of the elements of $\bx$ is $\sum_{i=1}^5 x_i$
-[remember that the R notation is just ```sum(x)```], and we will see
+[remember that the R notation is just `sum(x)`], and we will see
 that this can be used very profitably with matrices.  Note that
 although technically one needs to specify both the letter $i$ and the
 limits of the sum, in practice these are often omitted:
