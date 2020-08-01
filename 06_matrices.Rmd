@@ -27,8 +27,8 @@ cbind(c(0,3),c(5,-1),c(75,-3))
 rbind(c(0,5,75,3),c(-1,-3),2,3)
 ```
 
-and indeed there are many other ways (the final arguments ```2``` and
-```3``` refer to the number of rows and columns respectively).
+and indeed there are many other ways (the final arguments `2` and
+`3` refer to the number of rows and columns respectively).
 
 ## Index notation for matrices
 
@@ -45,7 +45,7 @@ $$
 
 We can refer to individual elements using $M_{ij}$ which refers to row
 $i$, column $j$.  Thus in the example above we would have $M_{11}=0$,
-$M_{22}=35$, $M_{43}=-3$, and so on.  In R we say ```M[i,j]``` instead
+$M_{22}=35$, $M_{43}=-3$, and so on.  In R we say `M[i,j]` instead
 of $M_{ij}$:
 
 ```{r}
@@ -65,7 +65,7 @@ M
 
 To take the transpose of a matrix, we exchange rows for columns.  We
 write $A'$ or $A^T$ or sometimes $\operatorname{tr}(A)$ for the
-transpose of $A$, and in R we use function ```t()```:
+transpose of $A$, and in R we use function `t()`:
 
 ```{r}
 M
@@ -215,8 +215,8 @@ B
 A %*% B
 ```
 
-Note carefully that matrix multiplication uses ```%*%``` (an ordinary
-```*``` means pointwise multiplication.  Never ever ever ever ever
+Note carefully that matrix multiplication uses `%*%` (an ordinary
+`*` means pointwise multiplication.  Never ever ever ever ever
 ever ever ever ever ever ever ever ever ever ever ever ever ever ever
 ever ever ever ever ever ever ever ever ever ever ever ever ever ever
 ever ever ever ever ever ever ever ever ever ever ever ever ever ever
@@ -450,11 +450,11 @@ $$\operatorname{tr}
 \end{array}\right)=3-2+7-4=4$$
 
 
-R has a built-in function called ```trace()``` which is used for
+R has a built-in function called `trace()` which is used for
 debugging so we have to be sneaky:
 
 ```{r}
-M<-matrix(c(
+M <- matrix(c(
 3, 3, 0, 0,
 1,-2, 0, 0,
 0, 0, 7, 0,
@@ -560,7 +560,7 @@ not changed, only the magnitude.
 This equation is known as the *eigenvalue* equation.  Needless to say,
 this is a complicated and difficult equation but R can calculate
 eigenvalues and eigenvectors for any square matrix if they exist using
-the ```eigen()``` builtin function:
+the `eigen()` builtin function:
 
 ```{r}
 A <- matrix(c(5,2,1,2,3,0,1,0,6),3,3)
@@ -569,8 +569,8 @@ eigen(A)
 ```
 
 (note that matrix $A$ is symmetric, which makes things considerably
-simpler).  The eigenvalues are given by the ```$values``` component
-and the eigenvectors are given by the _*columns* of the ```$vectors```
+simpler).  The eigenvalues are given by the `$values` component
+and the eigenvectors are given by the _*columns* of the `$vectors`
 component.  Verify:
 
 

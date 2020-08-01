@@ -137,17 +137,17 @@ find the exact positions of these using R.  But before we start using
 R, we can say that $x=0$ is an _exact_ root of $f(x)=0$.  Can you see
 why?
 
-To find a root of a function ```f```, we use the ```uniroot()```
-function; remember to type ```?uniroot``` at the R prompt to get help
+To find a root of a function `f`, we use the `uniroot()`
+function; remember to type `?uniroot` at the R prompt to get help
 on this functionality.
 
 ```{r}
 uniroot(f,interval=c(-3,-1))
 ```
 
-We can see from the different lines of output from ```uniroot()```
-that the root is at ```-2.28051``` at which point the function has a
-value of ```1.057589e-6```, which is very small.  To find the other
+We can see from the different lines of output from `uniroot()`
+that the root is at `-2.28051` at which point the function has a
+value of `1.057589e-6`, which is very small.  To find the other
 root we use a different starting interval:
 
 ```{r}
@@ -164,7 +164,7 @@ uniroot(f,interval=c(-0.1,0.1))
 ### verification
 
 Always always always verify your findings.  We will take the values
-found by ```uniroot()``` and mark them on a plot, just to check that
+found by `uniroot()` and mark them on a plot, just to check that
 they do in fact correspond to roots:
 
 ```{r}
@@ -175,9 +175,9 @@ points(c(-2.28051,0,2.114632),c(0,0,0),pch=4,cex=3,col='red')
 ```
 
 In the diagram above, the red crosses are plotted at the positions
-given by ```uniroot()``` and we can see that these lie at the points
+given by `uniroot()` and we can see that these lie at the points
 where the curve crosses the x-axis, that is, at the roots of function
-```f()```.
+`f()`.
 
 ## Optimization
 
@@ -185,7 +185,7 @@ Quite often we wish to minimize a function (typically the function
 represents a cost of some sort, and we wish to minimize this).  In
 calculus we observe that at a minimum, $f'(x)=0$ but this turns out to
 be difficult to use in practice.  The R function we will use is called
-```optimize()``` and this again takes a function and an interval.
+`optimize()` and this again takes a function and an interval.
 Looking again at the graph of the function we see that there is one
 minimum at about $x=-1.1$ and one at about $x=2.5$.
 
@@ -208,7 +208,7 @@ point.  We can find the other (local!) minimum:
 optimize(f,c(2,3))
 ```
 
-To find a _maximum_ we simply minimize the negative of ```f()```:
+To find a _maximum_ we simply minimize the negative of `f()`:
 
 ```{r}
 g <- function(x){-f(x)} # g(x) = -f(x)
@@ -219,7 +219,7 @@ optimize(g,c(-1,2))     # take care with signs
 ### Verification
 
 Always always always verify your findings.  We will take the values
-found by ```optim()``` and mark them on a plot, just to check that
+found by `optim()` and mark them on a plot, just to check that
 they do in fact correspond to (local) maxima:
 
 ```{r}
@@ -233,9 +233,9 @@ points(
 ```
 
 In the diagram above, the red crosses are plotted at the positions
-given by ```optim()``` and we can see that these lie at the points
+given by `optim()` and we can see that these lie at the points
 where the curve has a (local) maximum or minimum, that is, at extrema
-of ```f()```.
+of `f()`.
 
 
 ## Worked example: algebraic maximization.

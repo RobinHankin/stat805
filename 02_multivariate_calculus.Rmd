@@ -108,7 +108,7 @@ sum(d *2*(1:9))
 ```
 
 See if you can figure out what is going on here.  Note that, in R
-idiom, ```f()``` takes a *single* argument which is in this case a
+idiom, `f()` takes a *single* argument which is in this case a
 vector of length 9.
 
 ## Multivariate root-finding
@@ -135,7 +135,7 @@ jj <- expand.grid(xvals,yvals)
 head(jj)
 ```
 
-Thus each row of variable ```jj``` is a pair of x,y values.  To
+Thus each row of variable `jj` is a pair of x,y values.  To
 evaluate our function $f(x,y) = x^2+y^2 + x + 4y + \sin(xy)$
 we need idiom like this:
 
@@ -147,7 +147,7 @@ f <- function(v){
 }
 ```
 
-and to evaluate it we need to use the ```apply()``` construction:
+and to evaluate it we need to use the `apply()` construction:
 
 ```{r}
 M <- apply(jj,1,f)     # apply the function f() to jj
@@ -155,7 +155,7 @@ M <- matrix(M,100,100) # wrap M up into a matrix
 str(M)                 # str() summarises R objects
 ```
 
-We can view M using ```contour()```:
+We can view M using `contour()`:
 
 ```{r}
 contour(xvals,yvals,M,nlevels=30,xlim=c(-5,5),ylim=c(-5,5),asp=1,axes=FALSE)
@@ -176,7 +176,7 @@ $f(x,y)=0$.
     
 ## multivariate optimization
 
-To minimize a multivariate function we need to use ```optim()```,
+To minimize a multivariate function we need to use `optim()`,
 which requires us to provide an initial value.  From the contour graph
 we can see that there is a local minimum near $(0.1,-2)$ so we can use
 that:

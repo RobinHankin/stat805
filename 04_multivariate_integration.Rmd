@@ -24,7 +24,7 @@ f <- function(v){
 }
 ```
 
-We will visualise $f()$ using ```persp()```:
+We will visualise $f()$ using `persp()`:
 
 ```{r}
 xvals <- seq(from = -2, to = +2, len=100)
@@ -61,8 +61,8 @@ I &=&
 $$
 
 or $42\frac{2}{3}\simeq 42.67$.  We can accomplish this calculation
-numerically using the ```adaptIntegrate()``` function of the
-```cubature``` R package:
+numerically using the `adaptIntegrate()` function of the
+`cubature` R package:
 
 ```{r}
 library("cubature")
