@@ -113,9 +113,9 @@ Actually it might be  better to plot both $f$ and $f'$ on the same axes:
 
 
 ```{r}
-plot(x,f(x),type='l',main="f and fdash")
-points(x,fdash(x),type='l',col='red')
-legend("topleft",lty=1,col=c("black","red"),legend=c("f(x)","fdash(x)"))
+plot(x,f(x),type='l',lty=1,main="f and fdash")
+points(x,fdash(x),lty=2,type='l',col='red')
+legend("topleft",lty=1:2,col=c("black","red"),legend=c("f(x)","fdash(x)"))
 abline(0,0)
 ```
 
