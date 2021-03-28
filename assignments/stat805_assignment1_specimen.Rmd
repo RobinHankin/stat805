@@ -1,0 +1,160 @@
+---
+title: "stat601_assignment1_specimen"
+author: "Robin Hankin"
+date: "29/03/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Question 1
+
+```{r}
+f <- function(x){sin(sin(x^2)) + cos(x/(1+x+2*x^2)) - 11/10}
+f(0)  # should be -0.1
+x <- seq(from=-2,to=2,len=100)
+plot(x,f(x),type='l')
+abline(0,0)
+```
+
+
+```{r}
+roots <- c(
+uniroot(f,c(-2,-1))$root,
+uniroot(f,c(-1,0))$root,
+uniroot(f,c(0,1))$root,
+uniroot(f,c(1,2))$root)
+roots
+f(roots) # small
+
+plot(x,f(x),type='l')
+abline(h=0)
+abline(v=roots)  # visual check
+```
+
+Differentiation is possible but difficult.
+
+```{r}
+optimize(f,c(-1,1))
+```
+
+(minimum at $x=0$ which is obvious after the fact)
+verify:
+
+```{r}
+p <- optimize(f,c(-1,1))
+p
+xx <- p$minimum
+small <- 1e-3
+f(c(xx-small,xx,xx+small))  # x is a local maximum
+```
+
+
+```{r}
+p1 <- optimize(f,c(-2,0),maximum=TRUE)
+p2 <- optimize(f,c(0,2),maximum=TRUE)
+p1
+p2
+plot(x,f(x),type='l')
+# visual check:
+points(x=c(p1$maximum,p2$maximum),y=c(p1$objective,p2$objective),pch=16,col='red')
+```
+
+
+Area given by `integrate()`:
+
+```{r}
+integrate(f,-2,2)
+# verify by Euler:
+sum(f(x)*(x[2]-x[1])) # approximate agreement
+xx <- seq(from=-2,to=2,len=1e6)
+sum(f(xx)*(xx[2]-xx[1])) # better
+```
+
+# Question 2
+
+```{r}
+f <- function(v){
+  x <- v[1]
+  y <- v[2]
+  x^2+y^2+4*y+7*sin(x+y^2)
+}
+f(c(0,0))
+```
+
+
+```{r}
+f(c(0.4,0.5))
+```
+
+```{r}
+x <- seq(from=-3,to=3,len=100)
+y <- x
+M <- as.matrix(expand.grid(x,y))
+z <- matrix(apply(M,1,f),100,100)
+contour(x,y,z,asp=1)
+```
+
+```{r}
+o <- optim(c(-1,1),f)
+o
+c(f(o$par),f(o$par+c(0,small)),f(o$par-c(0,small)),
+           f(o$par+c(small,0)),f(o$par-c(small,0)))
+```
+
+```{r}
+library(cubature)
+hcubature(f,c(-3,-3),c(3,3))
+sum(z*(x[2]-x[1])*(y[2]-y[1]))
+# close enough
+```
+
+# Question 3
+```{r}
+M <- matrix(c(5,1,1,1,2,1,1,1,2),3,3,byrow=TRUE)
+M
+det(M)
+sum(diag(M))
+5+2+2
+```
+
+```{r}
+(Minv <- solve(M))
+Minv %*% M
+M %*% Minv
+```
+
+
+```{r}
+eigen(M)
+```
+
+```{r}
+v1 <- eigen(M)$vectors[,1]
+(M %*% v1)/ v1 - eigen(M)$values[1]  #  zero to numerical precision
+```
+
+```{r}
+f <- function(x){det(matrix(c(5,1,x,1,2,1,x,1,2),3,3,byrow=TRUE))}
+x <- seq(from=-4,to=4,len=100)
+plot(x,sapply(x,f))
+abline(0,0)
+```
+
+(could find maximum, range of positive determinant, slope at roots etc)
+
+
+```{r}
+P <- function(v){
+  x <- v[1]
+  y <- v[2]
+  eigen(matrix(c(5,y,x,y,2,1,x,1,x),3,3,byrow=TRUE))$values
+}
+Pmax <- function(v){max(P(v))}
+x <-seq(from=-2,to=2,len=100)
+y <- x
+z <- matrix(apply(expand.grid(x,y),1,Pmax),100,100)
+contour(x,y,z)
+```
