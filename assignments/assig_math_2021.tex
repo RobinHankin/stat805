@@ -1,0 +1,185 @@
+% -*- mode: noweb; noweb-default-code-mode: R-mode; -*-
+\documentclass[nojss]{jss}\usepackage[]{graphicx}\usepackage[]{color}
+% maxwidth is the original width if it is less than linewidth
+% otherwise use linewidth (to make sure the graphics do not exceed the margin)
+\makeatletter
+\def\maxwidth{ %
+  \ifdim\Gin@nat@width>\linewidth
+    \linewidth
+  \else
+    \Gin@nat@width
+  \fi
+}
+\makeatother
+
+\definecolor{fgcolor}{rgb}{0.345, 0.345, 0.345}
+\newcommand{\hlnum}[1]{\textcolor[rgb]{0.686,0.059,0.569}{#1}}%
+\newcommand{\hlstr}[1]{\textcolor[rgb]{0.192,0.494,0.8}{#1}}%
+\newcommand{\hlcom}[1]{\textcolor[rgb]{0.678,0.584,0.686}{\textit{#1}}}%
+\newcommand{\hlopt}[1]{\textcolor[rgb]{0,0,0}{#1}}%
+\newcommand{\hlstd}[1]{\textcolor[rgb]{0.345,0.345,0.345}{#1}}%
+\newcommand{\hlkwa}[1]{\textcolor[rgb]{0.161,0.373,0.58}{\textbf{#1}}}%
+\newcommand{\hlkwb}[1]{\textcolor[rgb]{0.69,0.353,0.396}{#1}}%
+\newcommand{\hlkwc}[1]{\textcolor[rgb]{0.333,0.667,0.333}{#1}}%
+\newcommand{\hlkwd}[1]{\textcolor[rgb]{0.737,0.353,0.396}{\textbf{#1}}}%
+\let\hlipl\hlkwb
+
+\usepackage{framed}
+\makeatletter
+\newenvironment{kframe}{%
+ \def\at@end@of@kframe{}%
+ \ifinner\ifhmode%
+  \def\at@end@of@kframe{\end{minipage}}%
+  \begin{minipage}{\columnwidth}%
+ \fi\fi%
+ \def\FrameCommand##1{\hskip\@totalleftmargin \hskip-\fboxsep
+ \colorbox{shadecolor}{##1}\hskip-\fboxsep
+     % There is no \\@totalrightmargin, so:
+     \hskip-\linewidth \hskip-\@totalleftmargin \hskip\columnwidth}%
+ \MakeFramed {\advance\hsize-\width
+   \@totalleftmargin\z@ \linewidth\hsize
+   \@setminipage}}%
+ {\par\unskip\endMakeFramed%
+ \at@end@of@kframe}
+\makeatother
+
+\definecolor{shadecolor}{rgb}{.97, .97, .97}
+\definecolor{messagecolor}{rgb}{0, 0, 0}
+\definecolor{warningcolor}{rgb}{1, 0, 1}
+\definecolor{errorcolor}{rgb}{1, 0, 0}
+\newenvironment{knitrout}{}{} % an empty environment to be redefined in TeX
+
+\usepackage{alltt}
+\usepackage{amsmath}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% declarations for jss.cls %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%% just as usual
+\author{Auckland University of Technology}
+\title{Calculus assignment, STAT805}
+%\VignetteIndexEntry{The multivator package}
+
+%% for pretty printinng and a nice hypersummary also set:
+\Plainauthor{Robin K. S. Hankin}
+\Plaintitle{Math}
+\Shorttitle{Math}
+
+
+\newcommand{\question}{{\bf Question: }}
+\newcommand{\answer}{{\bf Answer: }}
+\newcommand{\Rq}{{\bf ``Is R doing what I think it is doing?''}}
+
+%% an abstract and keywords
+
+\Abstract{ All four questions have equal value: 10 marks for the
+  question itself and 15 for the verification of your work.}
+
+\Keywords{R, calculus}
+\Plainkeywords{R}
+
+
+
+\Address{
+  Robin K. S. Hankin\\
+  WT118\\
+  Auckland University of Technology\\
+  Auckland\\
+  New Zealand\\
+}
+
+
+%% need no \usepackage{Sweave.sty}
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\begin{document}  
+\section{Calculus (univariate)}
+
+
+\subsection*{Question 1}
+
+Consider the  function defined by:
+
+\[
+f(x) = \sin(\sin(x^2)) + \cos\left(\frac{2x}{1+x+2x^2}\right)-\frac{11}{10}
+\]
+
+
+\begin{itemize}
+\item Translate this into R idiom and plot it for
+  $x\in\left[-2,2\right]$.
+  \item Use {\tt uniroot()} to find all four roots of $f(\cdot)$ in
+    the interval $\left[-2,2\right]$.
+\item Observe how difficult it would be to differentiate this function
+  symbolically (not impossible!  Just a PITA).  Use R to plot an
+  approximate derivative in the same range.
+\item Recall that if $x_0$ is a local maximum, then
+  $f'(x_0)=0$.  But observe how difficult it would be to solve
+  $\frac{df(x)}{dx}=0$ for $x$ symbolically.  Now use R to numerically minimize the
+  function in the interval $\left[-1,1\right]$, using {\tt optimize()}
+  \item find both local maxima in the interval $\left[-2,2\right]$.
+\item Find the area under the curve from 0 to 2 using {\tt integrate()}. 
+\end{itemize}
+
+\subsection*{Question 2}
+
+Consider the function
+
+\[  
+f(x,y) = x^2+y^2+4y+ 7\sin(x+y^2)
+\]
+
+\begin{itemize}
+\item Translate this function into R idiom and evaluate $f(0.4,0.5)$.
+\item Plot a contour graph of this function in the range $-3\leq x,y\leq 3$.
+\item Use {\tt optim()} to find the local minimum of this function near
+$(-1,1)$.
+\item Use {\tt cubature::hcubature()} to find the volume enclosed
+between the x-y plane and the function surface in the plotting region.
+\end{itemize}
+    
+\subsection*{Question 3}
+ 
+Consider the matrix $M$ defined by
+
+
+\[
+\begin{bmatrix}
+  5&1&1\\
+  1&2&1\\
+  1&1&2
+  \end{bmatrix}
+\]
+
+
+\begin{itemize}
+\item Translate this matrix into R and calculate $\operatorname{det}\left(M\right)$ and $\operatorname{tr}\left(M\right)$. 
+\item Find $M^{-1}$ using {\tt solve()} and verify that this is correct.
+\item Find the eigenvectors and eigenvalues of $M$ and demonstrate the validity of your result
+\item Consider instead the matrix $N=N(x)=\begin{bmatrix}
+  9&1&x\\
+  1&2&1\\
+  x&1&2
+  \end{bmatrix}$, where $x$ is a real number.  Plot $\operatorname{det}\left(\operatorname{N}(x)\right)$  for a sensible range of $x$.  Say something interesting about the graph.  
+  \item  (harder) Consider the matrix $P=P(x,y)=\begin{bmatrix}
+  5&y&x\\
+  y&x&1\\
+  x&1&x
+  \end{bmatrix}$, where $x,y$ are real numbers.  Say something interesting about the eigenvalues of $P$, considered as a function of $x$ and~$y$.
+\end{itemize} 
+
+\subsection*{Question 4}
+
+\begin{itemize}
+  \item 
+    Bearing in mind that question 4 has equal course credit to the
+    other questions, choose any single question (or part of a
+    question) above, and generalise the question in some way (perhaps
+    you could consider a function with an additional parameter, or
+    create a new set of more stringent verification tests).  Credit
+    will be given for appropriate reasoning, quantification of any
+    numerical error, and verification of results.
+    \end{itemize}
+
+
+\bibliography{multivator} \end{document}
+
