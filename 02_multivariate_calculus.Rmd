@@ -122,7 +122,7 @@ recognisable as a circle of radius 2.  However, more complicated
 examples cannot be solved algebraically and we need to use numerical
 methods.
 
-We will consider $f(x,y) = x+\sin(x)-xy^2$, a more complicated
+We will consider $f(x,y) = x^2+y^2+x+4y+\sin(xy)$, a more complicated
 function; finding roots of this equation algebraically is more or less
 impossible.  So we need visual help.  There are a number of ways of
 representing this function, but the first step is to define an array
