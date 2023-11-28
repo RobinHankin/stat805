@@ -57,7 +57,7 @@
 
 %% just as usual
 \author{Auckland University of Technology}
-\title{Assignment 1, STAT805}
+\title{Assignment, calculus, STAT805}
 %\VignetteIndexEntry{The multivator package}
 
 %% for pretty printinng and a nice hypersummary also set:
@@ -72,8 +72,10 @@
 
 %% an abstract and keywords
 
-\Abstract{ All four questions have equal value: 10 marks for the
-  question itself and 15 for the verification of your work.}
+\Abstract{All questions have equal value: 20 marks for the question
+  itself and 30 for the verification of your work.  Use rmarkdown but
+  submit your work in PDF form.
+  }
 
 \Keywords{R, calculus}
 \Plainkeywords{R}
@@ -92,7 +94,6 @@
 %% need no \usepackage{Sweave.sty}
 \IfFileExists{upquote.sty}{\usepackage{upquote}}{}
 \begin{document}  
-\section{Calculus (univariate)}
 
 
 \subsection*{Question 1}
@@ -105,7 +106,10 @@ f(x) = \sin(\sin(x^2)) + \cos\left(\frac{x}{1+x+2x^2}\right)-\frac{11}{10}
 
 
 \begin{itemize}
-\item Translate this into R idiom and plot it for
+\item Translate this function into R.
+\item (hard) Verify that your R function correctly represents this
+  mathematical function.  Use four or five different techniques.
+\item Plot your function
   $x\in\left[-2,2\right]$.
   \item Use {\tt uniroot()} to find all four roots of $f(\cdot)$ in
     the interval $\left[-2,2\right]$.
@@ -129,7 +133,9 @@ f(x,y) = x^2+y^2+4y+ 7\sin(x+y^2)
 \]
 
 \begin{itemize}
-\item Translate this function into R idiom and evaluate $f(0.4,0.5)$.
+\item Translate this function into R.
+\item (hard) Verify that your R function correctly represents this mathematical 
+  function.  Use four or five different techniques.
 \item Plot a contour graph of this function in the range $-3\leq x,y\leq 3$.
 \item Use {\tt optim()} to find the local minimum of this function near
 $(-1,1)$.
@@ -137,48 +143,11 @@ $(-1,1)$.
 between the x-y plane and the function surface in the plotting region.
 \end{itemize}
     
+
 \subsection*{Question 3}
- 
-Consider the matrix $M$ defined by
 
 
-\[
-\begin{bmatrix}
-  5&1&1\\
-  1&2&1\\
-  1&1&2
-  \end{bmatrix}
-\]
 
-
-\begin{itemize}
-\item Translate this matrix into R and calculate $\operatorname{det}\left(M\right)$ and $\operatorname{tr}\left(M\right)$. 
-\item Find $M^{-1}$ using {\tt solve()} and verify that this is correct.
-\item Find the eigenvectors and eigenvalues of $M$ and demonstrate the validity of your result
-\item Consider instead the matrix $N=N(x)=\begin{bmatrix}
-  5&1&x\\
-  1&2&1\\
-  x&1&2
-  \end{bmatrix}$, where $x$ is a real number.  Plot $\operatorname{det}\left(\operatorname{N}(x)\right)$  for a sensible range of $x$.  Say something interesting about the graph.  
-  \item  (harder) Consider the matrix $P=P(x,y)=\begin{bmatrix}
-  5&y&x\\
-  y&2&1\\
-  x&1&x
-  \end{bmatrix}$, where $x,y$ are real numbers.  Say something interesting about the eigenvalues of $P$, considered as a function of $x$ and~$y$.
-\end{itemize} 
-
-\subsection*{Question 4}
-
-\begin{itemize}
-  \item 
-    Bearing in mind that question 4 has equal course credit to the
-    other questions, choose any single question (or part of a
-    question) above, and generalise the question in some way (perhaps
-    you could consider a function with an additional parameter, or
-    create a new set of more stringent verification tests).  Credit
-    will be given for appropriate reasoning, quantification of any
-    numerical error, and verification of results.
-    \end{itemize}
 
 
 \bibliography{multivator} \end{document}
