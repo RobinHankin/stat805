@@ -20,7 +20,7 @@ description: "This is the supplementary course manual for STAT805 (mathematics)"
 
 This is the handbook for STAT805 (mathematics).  Details of the course
 structure, including assessment and timetables, may be found on
-AUTonline.  The whole course is based around R and RStudio which may
+canvas.  The whole course is based around R and RStudio which may
 be downloaded from
 
 [https://cran.r-project.org/]
@@ -39,18 +39,12 @@ playlist is available on YouTube at:
 ```
 
 which you may view at your leisure (the mathematics component should
-be added ast some point in the future).  The URL should be clickable
+be added at some point in the future).  The URL should be clickable
 in this and similar boxes throughought the manual.  Note that the
 course as delivered will vary slightly from the YouTube videos and in
 particular the material might be presented in a different order; but
 each class is a reasonably self-contained unit, split into three or
-four parts.  The videos are also available in a slightly different
-format on Mediasite.  To view, log in to AUTonline and then
-
-`content system -> institution -> learn -> maths`
-
-takes you to a number of mathematical resources, including the videos
-which are at `STAT601` or `STAT805`.
+four parts.  
 
 This manual is distributed under the GNU GPL and is available at
 
